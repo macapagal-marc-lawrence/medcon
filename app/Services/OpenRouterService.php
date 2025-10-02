@@ -18,7 +18,7 @@ class OpenRouterService
             'base_uri' => $this->baseUrl,
             'headers' => [
                 'Authorization' => "Bearer {$this->apiKey}",
-                'HTTP-Referer' => 'http://localhost',  // Local development
+                'HTTP-Referer' => 'http://mediconnect.fun',  // Local development
                 'X-Title' => 'MediConnect',
                 'Content-Type' => 'application/json'
             ]
