@@ -13,7 +13,7 @@ class OpenRouterService
 
     public function __construct()
     {
-        $this->apiKey = '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';
+        $this->apiKey = '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';
         $this->client = new Client([
             'base_uri' => $this->baseUrl,
             'headers' => [
