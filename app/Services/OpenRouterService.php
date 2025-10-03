@@ -9,16 +9,16 @@ class OpenRouterService
 {
     private $client;
     private $apiKey;
-    private $baseUrl = 'https://openrouter.ai/api/v1/chat/completions';
+    private $baseUrl = 'https://openrouter.ai/api/v1/';
 
     public function __construct()
     {
-        $this->apiKey = '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';
+        $this->apiKey = env('OPENROUTER_API_KEY');
         $this->client = new Client([
             'base_uri' => $this->baseUrl,
             'headers' => [
                 'Authorization' => "Bearer {$this->apiKey}",
-                'HTTP-Referer' => 'https://mediconnect.fun',  // Local development
+                'HTTP-Referer' => env('APP_URL', 'http://localhost'),  // Local development
                 'X-Title' => 'MediConnect',
                 'Content-Type' => 'application/json'
             ]
@@ -28,7 +28,7 @@ class OpenRouterService
     public function chat($message, $context = [])
     {
         try {
-            $response = $this->client->post('/chat/completions', [
+            $response = $this->client->post('chat/completions', [
                 'json' => [
                     'model' => 'openai/gpt-oss-20b:free', // Using the free OSS model
                     'messages' => array_merge([
@@ -138,7 +138,7 @@ EOT;
 
             \Log::info('Request body:', $requestBody);
 
-            $response = $this->client->post('', $requestBody);
+            $response = $this->client->post('chat/completions', $requestBody);
             $responseBody = $response->getBody()->getContents();
             
             \Log::info('API Response:', ['response' => $responseBody]);
