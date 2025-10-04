@@ -9,10 +9,18 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use App\Services\MailService;
 
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
+    
+    protected $mailService;
+
+    public function __construct(MailService $mailService)
+    {
+        $this->mailService = $mailService;
+    }
 
     /**
      * Validate and create a newly registered user.
@@ -59,6 +67,14 @@ class CreateNewUser implements CreatesNewUsers
                 'latitude' => $input['latitude'] ?? null,
                 'longitude' => $input['longitude'] ?? null,
             ]);
+        }
+
+        // Send welcome email
+        try {
+            $this->mailService->sendRegistrationEmail($user, $input['usertype']);
+        } catch (\Exception $e) {
+            \Log::error("Failed to send welcome email: " . $e->getMessage());
+            // Don't prevent registration if email fails
         }
 
         return $user;
