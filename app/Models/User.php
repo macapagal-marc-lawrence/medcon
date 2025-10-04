@@ -11,10 +11,22 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Notifications\CustomResetPasswordNotification;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new CustomResetPasswordNotification($token));
+    }
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
