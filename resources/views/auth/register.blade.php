@@ -16,7 +16,19 @@
 
             <div class="mt-4">
                 <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-input id="email" 
+                         class="block mt-1 w-full @error('email') border-red-500 @enderror" 
+                         type="email" 
+                         name="email" 
+                         :value="old('email')" 
+                         required 
+                         autocomplete="email"
+                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                         title="Please enter a valid email address" />
+                @error('email')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+                <p class="mt-1 text-sm text-gray-500">We'll send a verification link to this email address.</p>
             </div>
 
             <div class="mt-4">
@@ -266,6 +278,48 @@
                         }
                     );
                 }
+            </script>
+
+            <!-- Email Validation Script -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const emailInput = document.getElementById('email');
+                    const emailError = document.createElement('div');
+                    emailError.className = 'mt-1 text-sm text-red-600';
+                    emailError.style.display = 'none';
+                    emailInput.parentNode.appendChild(emailError);
+
+                    // Real-time email validation
+                    emailInput.addEventListener('input', function() {
+                        const email = this.value.trim();
+                        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                        
+                        if (email === '') {
+                            emailError.style.display = 'none';
+                            this.classList.remove('border-red-500');
+                            return;
+                        }
+                        
+                        if (!emailRegex.test(email)) {
+                            emailError.textContent = 'Please enter a valid email address (e.g., user@example.com)';
+                            emailError.style.display = 'block';
+                            this.classList.add('border-red-500');
+                        } else {
+                            emailError.style.display = 'none';
+                            this.classList.remove('border-red-500');
+                        }
+                    });
+
+                    // Check email availability on blur
+                    emailInput.addEventListener('blur', function() {
+                        const email = this.value.trim();
+                        if (email && emailInput.classList.contains('border-red-500') === false) {
+                            // You can add AJAX call here to check email availability
+                            // For now, we'll just show a loading state
+                            this.style.borderColor = '#d1d5db';
+                        }
+                    });
+                });
             </script>
 
             <div class="flex items-center justify-end mt-4">
