@@ -22,9 +22,47 @@
 
       <div class="container position-relative">
 
+        <!-- Success/Error Messages -->
+        @if(session('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert" data-aos="fade-down" data-aos-delay="50">
+            <i class="bi bi-check-circle me-2"></i>
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
+
+        @if(session('error'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" data-aos="fade-down" data-aos-delay="50">
+            <i class="bi bi-exclamation-circle me-2"></i>
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
+
         <div class="welcome position-relative" data-aos="fade-down" data-aos-delay="100">
-          <h2>Welcome to MediConnect</h2>
-          <p>“Smart Prescriptions, Connected Care.”</p>
+          @if(isset($userData) && $userData)
+            <h2>Welcome back, {{ $userData['name'] }}!</h2>
+            <p>Ready to manage your {{ $userData['usertype'] === 'customer' ? 'prescriptions and orders' : ($userData['usertype'] === 'drugstore' ? 'inventory and orders' : 'system') }}?</p>
+            <div class="mt-4">
+              <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg me-3">
+                <i class="bi bi-speedometer2 me-2"></i>
+                Go to Dashboard
+              </a>
+              @if($userData['usertype'] === 'customer')
+                <a href="{{ route('customer.profile') }}" class="btn btn-outline-primary btn-lg">
+                  <i class="bi bi-person me-2"></i>
+                  View Profile
+                </a>
+              @endif
+            </div>
+          @else
+            <h2>Welcome to MediConnect</h2>
+            <p>"Smart Prescriptions, Connected Care."</p>
+            <div class="mt-4">
+              <a href="{{ route('register') }}" class="btn btn-primary btn-lg me-3">Get Started</a>
+              <a href="{{ route('login') }}" class="btn btn-outline-primary btn-lg">Login</a>
+            </div>
+          @endif
         </div><!-- End Welcome -->
 
         <div class="content row gy-4">

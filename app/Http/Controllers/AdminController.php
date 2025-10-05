@@ -148,15 +148,32 @@ class AdminController extends Controller
 
     /**
      * Landing page (/) logic.
-     * Redirect authenticated users to /home automatically.
+     * Show landing page for everyone, with different content for logged in users.
      */
     public function home()
     {
-        if (Auth::check()) {
-            return redirect()->route('home');
+        // Always show the landing page, but pass user data if logged in
+        $user = Auth::user();
+        $userData = null;
+        
+        if ($user) {
+            // Get user-specific data for the landing page
+            $userData = [
+                'user' => $user,
+                'usertype' => $user->usertype,
+                'name' => $user->username,
+                'email' => $user->email,
+            ];
+            
+            // Add specific data based on user type
+            if ($user->usertype === 'customer' && $user->customer) {
+                $userData['customer'] = $user->customer;
+            } elseif ($user->usertype === 'drugstore' && $user->drugstore) {
+                $userData['drugstore'] = $user->drugstore;
+            }
         }
-
-        return view('home.index'); // This is your landing (public) page
+        
+        return view('home.index', compact('userData'));
     }
 
     public function createCustomer()

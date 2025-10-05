@@ -69,11 +69,11 @@ class CreateNewUser implements CreatesNewUsers
             ]);
         }
 
-        // Send welcome email
+        // Send email verification
         try {
-            $this->mailService->sendRegistrationEmail($user, $input['usertype']);
+            $user->sendEmailVerificationNotification();
         } catch (\Exception $e) {
-            \Log::error("Failed to send welcome email: " . $e->getMessage());
+            \Log::error("Failed to send verification email: " . $e->getMessage());
             // Don't prevent registration if email fails
         }
 

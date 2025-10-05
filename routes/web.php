@@ -5,25 +5,40 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EmailVerificationController;
 
 /*
 |--------------------------------------------------------------------------
 | Landing Page (Public)
 |--------------------------------------------------------------------------
-| Redirect authenticated users to /home automatically.
-| Guests will see the home.index (landing page).
+| Show landing page for everyone, with different content for logged in users.
 */
 Route::get('/', [AdminController::class, 'home'])->name('landing');
 
+// Email verification routes
+Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+    ->middleware(['signed'])
+    ->name('verification.verify');
+    
+Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])
+    ->middleware(['auth', 'throttle:6,1'])
+    ->name('verification.send');
+
 /*
 |--------------------------------------------------------------------------
-| Authenticated Dashboard Redirect
+| Dashboard Routes
 |--------------------------------------------------------------------------
-| This route redirects the user to their appropriate dashboard
-| based on usertype: admin, drugstore, or customer.
-| Protected by Jetstream’s auth and email verification middleware.
+| Separate dashboard routes for authenticated users.
 */
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        if (Auth::user()->usertype === 'customer') {
+            return app()->make(\App\Http\Controllers\Customer\CustomerController::class)->index();
+        }
+        return app()->make(\App\Http\Controllers\AdminController::class)->index();
+    })->name('dashboard');
+    
+    // Keep /home as alias for backward compatibility
     Route::get('/home', function () {
         if (Auth::user()->usertype === 'customer') {
             return app()->make(\App\Http\Controllers\Customer\CustomerController::class)->index();
@@ -153,6 +168,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Settings
     Route::get('/settings', [App\Http\Controllers\Customer\SettingController::class, 'index'])->name('settings.index');
+    Route::put('/settings', [App\Http\Controllers\Customer\SettingController::class, 'update'])->name('settings.update');
+    Route::put('/settings/password', [App\Http\Controllers\Customer\SettingController::class, 'updatePassword'])->name('settings.updatePassword');
 
     // Cart Routes
     Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'addToCart'])->name('cart.add');
