@@ -9,7 +9,7 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/mac.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="assets/img/doctors/mac3.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>Marc Lawrence Macapagal</h4>
                 <span>Developer</span>
@@ -27,7 +27,7 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/charles.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="assets/img/doctors/charles2.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>Charles Harold Venasquez</h4>
                 <span>Developer</span>
@@ -43,7 +43,7 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/cris.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="assets/img/doctors/cris2.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
                 <h4>Cris Gabriel Juanatas</h4>
                 <span>Developer</span>
