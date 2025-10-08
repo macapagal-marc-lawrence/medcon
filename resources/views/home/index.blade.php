@@ -148,26 +148,10 @@
 
     </section><!-- /Developers Section -->
 
-    <!-- Faq Section -->
-    <section id="faq" class="faq section light-background">
+    
 
-      @include('home.faq')
-    </section><!-- /Faq Section -->
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section">
-
-      @include('home.testimonials')
-
-    </section><!-- /Testimonials Section -->
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery section">
-
-      @include('home.gallery')
-
-    </section><!-- /Gallery Section -->
-
+    
+   
     <!-- Contact Section -->
     
 

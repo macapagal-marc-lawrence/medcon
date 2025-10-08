@@ -4,7 +4,8 @@
     <!-- Logo + Site Name -->
     <a href="{{ url('/') }}" class="logo d-flex align-items-center me-auto">
       <img src="{{ asset('assets/img/logo.png') }}" alt="MediConnect Logo" width="50" height="50">
-      <h1 class="sitename ms-2 mb-0">MediConnect</h1>
+      <h1 class="sitename ms-3 mb-0 fw-bold fs-1 fs-md-2 fs-lg-3 text-primary">MediConnect</h1>
+
     </a>
 
     <!-- Desktop Navigation -->
@@ -12,7 +13,6 @@
       <ul class="d-flex gap-4 mb-0">
         <li><a href="#home" class="active">Home</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
         <li><a href="#developers">Developers</a></li>
       </ul>
     </nav>

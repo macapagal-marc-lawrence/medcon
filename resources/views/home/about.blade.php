@@ -19,7 +19,7 @@
           <i class="fa-solid fa-vial-circle-check"></i>
           <div>
             <h5>AI‑Powered Medicine Finder</h5>
-            <p>Upload your symptoms, prescription, or even a photo of the medicine. Our AI analyzes your input and
+            <p>Input your symptoms, prescription, or the name of medicine. Our AI analyzes your input and
               searches local drugstore inventories to recommend the most suitable medication available.
               How it works: Powered by advanced AI trained on pharmacy stock and clinical guidelines, the system
               identifies the right medicine and suggests nearby availability. This approach helps prevent incorrect drug

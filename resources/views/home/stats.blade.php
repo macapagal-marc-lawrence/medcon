@@ -24,7 +24,7 @@
       <i class="fas fa-flask fa-3x mb-2"></i>
       <div class="stats-item text-center">
         <span data-purecounter-start="0" data-purecounter-end="12" data-purecounter-duration="1" class="purecounter"></span>
-        <p>E-Prescriptions</p>
+        <p>Prescriptions</p>
       </div>
     </div>
 

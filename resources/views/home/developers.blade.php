@@ -1,7 +1,6 @@
  <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Developers</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
       </div><!-- End Section Title -->
 
       <div class="container">
@@ -10,16 +9,15 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="assets/img/doctors/mac.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Medical Officer</span>
-                <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                <h4>Marc Lawrence Macapagal</h4>
+                <span>Developer</span>
+                <p>BSIT-4B</p>
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                  <a href="https://web.facebook.com/marc.lawrence.macapagal.2024/"><i class="bi bi-facebook"></i></a>
+                  <a href="https://www.instagram.com/dndlwrnc"><i class="bi bi-instagram"></i></a>
+                  <a href="https://github.com/macapagal-marc-lawrence"> <i class="bi bi-github"></i> </a>
                 </div>
               </div>
             </div>
@@ -29,16 +27,15 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-3.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="assets/img/doctors/charles.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>Cardiology</span>
-                <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
+                <h4>Charles Harold Venasquez</h4>
+                <span>Developer</span>
+                <p>BSIT-4B</p>
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                  <a href="https://web.facebook.com/charles.venasquez"><i class="bi bi-facebook"></i></a>
+                  <a href="https://www.instagram.com/_vnqzchaysss"><i class="bi bi-instagram"></i></a>
+                  <a href="https://github.com/Venasquez-Charles-Harold-Justine"> <i class="bi bi-github"></i> </a>
                 </div>
               </div>
             </div>
@@ -46,16 +43,15 @@
 
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
             <div class="team-member d-flex align-items-start">
-              <div class="pic"><img src="assets/img/doctors/doctors-4.jpg" class="img-fluid" alt=""></div>
+              <div class="pic"><img src="assets/img/doctors/cris.jpg" class="img-fluid" alt=""></div>
               <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Neurosurgeon</span>
-                <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
+                <h4>Cris Gabriel Juanatas</h4>
+                <span>Developer</span>
+                <p>BSIT-4B</p>
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""> <i class="bi bi-linkedin"></i> </a>
+                  <a href="https://web.facebook.com/cris.intal.juanatas"><i class="bi bi-facebook"></i></a>
+                  <a href="https://www.instagram.com/gabjuanatas/"><i class="bi bi-instagram"></i></a>
+                  <a href="https://github.com/juanatas-cris"> <i class="bi bi-github"></i> </a>
                 </div>
               </div>
             </div>

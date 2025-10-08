@@ -71,11 +71,11 @@
                     </div>
                     <div>
                         <x-label for="licenseno" value="License No." />
-                        <x-input type="text" name="licenseno" class="block w-full mt-1" />
+                        <x-input type="number" name="licenseno" class="block w-full mt-1" />
                     </div>
                     <div>
                         <x-label for="bir_number" value="BIR Number (TIN)" />
-                        <x-input type="text" name="bir_number" class="block w-full mt-1" placeholder="XXX-XXX-XXX-XXX" />
+                        <x-input type="number" name="bir_number" class="block w-full mt-1" placeholder="XXX-XXX-XXX-XXX" />
                         <p class="mt-1 text-sm text-gray-500">Enter your 12-digit Tax Identification Number (TIN)</p>
                     </div>
                     <div>
