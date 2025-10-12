@@ -101,9 +101,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link modern-nav-link" href="#featured-products">
-                        <i class="fa fa-star"></i>
-                        <span>Featured Products</span>
+                    <a class="nav-link modern-nav-link" href="#drugstore-location">
+                        <i class="fa fa-location"></i>
+                        <span>Drugstore Locations</span>
                     </a>
                 </li>
                 <li class="nav-item">

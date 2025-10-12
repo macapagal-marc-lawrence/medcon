@@ -289,13 +289,7 @@
                                         </div>
                                     @endforelse
 
-                                    @if($prescriptions->count() > 0)
-                                        <div class="text-center mt-4">
-                                            <a href="{{ route('prescriptions.index') }}" class="btn btn-light rounded-pill px-4">
-                                                View All Prescriptions <i class="fas fa-arrow-right ms-2"></i>
-                                            </a>
-                                        </div>
-                                    @endif
+                                
                                 </div>
                             </div>
                         </div>
@@ -546,7 +540,7 @@
                 <!-- sales report area end -->
 
                 <!-- Order History Section -->
-                <div class="row mt-5 mb-5">
+                <div id ="recent-orders" class="row mt-5 mb-5">
                     <div class="col-12">
                         <div class="card dashboard-card">
                             <div class="card-body p-4">
@@ -1021,7 +1015,7 @@
                 <!-- Available Drugstores Section end -->
 
                 <!-- Google Maps Section start -->
-                <div class="mt-5">
+                <div id="drugstore-location" class="mt-5">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="header-title mb-4">Drugstore Locations</h4>

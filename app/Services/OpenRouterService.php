@@ -116,6 +116,7 @@ IMPORTANT:
 3. Include operating days of the recommended drugstores
 4. Keep recommendations practical and easy to follow
 5. Use simple language and focus on what helps the patient feel better and recover safely
+6. Don't recommend medicines that are already expired
 EOT;
 
             $requestBody = [
