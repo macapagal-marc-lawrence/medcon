@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\PrescriptionSubmissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,10 @@ Route::middleware(['auth', 'isDrugstore'])->group(function () {
     Route::post('orders/{id}/approve', [App\Http\Controllers\DrugstoreOrderController::class, 'approve'])->name('orders.approve');
     Route::post('orders/{id}/reject', [App\Http\Controllers\DrugstoreOrderController::class, 'reject'])->name('orders.reject');
 
+Route::post('/prescriptions/{id}/approve', [PrescriptionSubmissionController::class, 'approve'])
+    ->name('prescriptions.approve');
+Route::post('/prescriptions/{id}/reject', [PrescriptionSubmissionController::class, 'reject'])
+    ->name('prescriptions.reject');
 
     // Show the add medicine form
     Route::get('add-medicine', [DrugstoreController::class, 'createMedicine'])->name('drugstore.create');
@@ -121,7 +126,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\Customer\ProfileController::class, 'index'])->name('customer.profile');
     Route::put('/profile/update', [App\Http\Controllers\Customer\ProfileController::class, 'update'])->name('customer.profile.update');
     Route::put('/profile/update-password', [App\Http\Controllers\Customer\ProfileController::class, 'updatePassword'])->name('customer.profile.updatePassword');
-
+    Route::post('/prescription/submit', [PrescriptionSubmissionController::class, 'store'])
+        ->name('prescription.submit')
+        ->middleware('auth');
+Route::get('/customer/notifications', [App\Http\Controllers\PrescriptionSubmissionController::class, 'checkCustomerNotifications'])
+        ->name('customer.notifications');
     // Cart Routes
     Route::post('/cart/add', [App\Http\Controllers\CartController::class, 'addToCart'])->name('cart.add');
     Route::delete('/cart/remove', [App\Http\Controllers\CartController::class, 'removeFromCart'])->name('cart.remove');

@@ -60,6 +60,15 @@
             </div>
             <!-- page title area end -->
             <div class="main-content-inner">
+                @if(!empty($debugInfo))
+    <div class="alert alert-info" style="position: sticky; top: 0; z-index: 999;">
+        <strong>Debug:</strong>
+        storeId={{ $debugInfo['storeId'] }},
+        prescriptions(total)={{ $debugInfo['prescTotal'] }},
+        onPage={{ $debugInfo['pageCount'] }}
+    </div>
+@endif
+
                 <!-- Quick Stats -->
                 <div class="row mt-5">
                     <!-- Total Medicines -->
@@ -236,6 +245,100 @@
                         </div>
                     </div>
                 </div>
+
+<!-- Submitted Prescriptions -->
+<div class="row">
+  <div class="col-12">
+    <div class="card mb-4">
+      <div class="card-header bg-white">
+        <div class="d-flex align-items-center">
+          <h5 class="mb-0">Submitted Prescriptions</h5>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Description / Note</th>
+                <th>Status</th>
+                <th>Date Sent</th>
+                <th>File</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @forelse(($recentPrescriptions ?? collect()) as $pres)
+
+
+                <tr>
+                  <td>#{{ $pres->id }}</td>
+                  <td>{{ $pres->customer->user->username ?? 'N/A' }}</td>
+                  <td>{{ $pres->description ?? '—' }}</td>
+                  <td>
+                    @if($pres->status == 'approved')
+                      <span class="badge badge-success">Approved</span>
+                    @elseif($pres->status == 'rejected')
+                      <span class="badge badge-danger">Rejected</span>
+                    @else
+                      <span class="badge badge-secondary">Pending</span>
+                    @endif
+                  </td>
+                  <td>{{ $pres->created_at->format('M d, Y h:i A') }}</td>
+                  <td>
+                    <a href="{{ asset('storage/'.$pres->file_path) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                      <i class="fa fa-file"></i> View
+                    </a>
+                  </td>
+                  <td>
+                    @if($pres->status === 'pending')
+                      <div class="btn-group">
+                        <button type="button" 
+                                class="btn btn-success btn-sm approve-prescription" 
+                                data-prescription-id="{{ $pres->id }}">
+                          <i class="fa fa-check"></i> Approve
+                        </button>
+                        <button type="button" 
+                                class="btn btn-danger btn-sm reject-prescription" 
+                                data-prescription-id="{{ $pres->id }}">
+                          <i class="fa fa-times"></i> Reject
+                        </button>
+                      </div>
+                    @elseif($pres->status === 'approved')
+                      <span class="text-success">
+                        <i class="fa fa-check-circle"></i> Approved
+                      </span>
+                    @elseif($pres->status === 'rejected')
+                      <span class="text-danger">
+                        <i class="fa fa-times-circle"></i> Rejected
+                      </span>
+                    @endif
+                  </td>
+                </tr>
+              @empty
+                <tr>
+                  <td colspan="7" class="text-center">No prescriptions found</td>
+                </tr>
+              @endforelse
+            </tbody>
+          </table>
+        </div>
+
+     {{-- Pagination --}}
+@if(!empty($recentPrescriptions) && 
+    $recentPrescriptions instanceof \Illuminate\Pagination\LengthAwarePaginator && 
+    $recentPrescriptions->hasPages())
+    <div class="d-flex justify-content-center mt-3">
+        {!! $recentPrescriptions->links('pagination::bootstrap-4') !!}
+    </div>
+@endif
+
+      </div>
+    </div>
+  </div>
+</div>
 
                 <!-- Recent Pending Orders -->
                 <div class="row">
@@ -827,6 +930,26 @@
                 }
             });
         });
+
+        // Prescription approval / rejection
+$('.approve-prescription').click(function() {
+  const id = $(this).data('prescription-id');
+  if (confirm('Approve this prescription?')) {
+    $.post(`/prescriptions/${id}/approve`, {_token: '{{ csrf_token() }}'})
+      .done(() => location.reload())
+      .fail(xhr => alert('Error: ' + xhr.responseJSON.message));
+  }
+});
+
+$('.reject-prescription').click(function() {
+  const id = $(this).data('prescription-id');
+  if (confirm('Reject this prescription?')) {
+    $.post(`/prescriptions/${id}/reject`, {_token: '{{ csrf_token() }}'})
+      .done(() => location.reload())
+      .fail(xhr => alert('Error: ' + xhr.responseJSON.message));
+  }
+});
+
     </script>
 </body>
 

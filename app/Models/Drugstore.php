@@ -31,6 +31,11 @@ class Drugstore extends Model
     return $this->hasMany(Medicine::class, 'store_id');
     }
 
+    public function prescriptionSubmissions()
+    {
+        return $this->hasMany(PrescriptionSubmission::class, 'drugstore_id');
+    }
+
 }
 
 

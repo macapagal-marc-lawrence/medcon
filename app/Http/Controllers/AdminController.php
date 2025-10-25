@@ -101,6 +101,12 @@ class AdminController extends Controller
                         ->orderBy('created_at', 'desc')
                         ->take(5)
                         ->get();
+                        $recentPrescriptions = \App\Models\PrescriptionSubmission::where('drugstore_id', $store_id)
+                        ->with(['customer.user', 'drugstore'])
+                        ->latest()
+                        ->take(5)
+                        ->get();
+
 
                     return view('drugstore.index', compact(
                         'totalMedicines',
@@ -108,7 +114,8 @@ class AdminController extends Controller
                         'lowStockCount',
                         'pendingOrders',
                         'todayRevenue',
-                        'recentOrders'
+                        'recentOrders',
+                         'recentPrescriptions'
                     ));
                 case 'customer':
                     $drugstores = Drugstore::with(['medicines' => function($query) {

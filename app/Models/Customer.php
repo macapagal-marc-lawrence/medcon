@@ -38,4 +38,10 @@ class Customer extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+        public function prescriptionSubmissions()
+    {
+        return $this->hasMany(PrescriptionSubmission::class, 'customer_id');
+    }
+
 }

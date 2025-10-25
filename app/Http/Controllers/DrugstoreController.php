@@ -6,134 +6,116 @@ use Illuminate\Http\Request;
 use App\Models\Medicine;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\PrescriptionSubmission;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Models\Drugstore;
+use App\Models\Order;
+
+
 
 class DrugstoreController extends Controller
 {
-    public function index()
-    {
-        // Clear query cache
-        \Illuminate\Support\Facades\DB::statement('SET SESSION query_cache_type = OFF');
-        $drugstore = \App\Models\Drugstore::where('user_id', Auth::id())->first();
-        $store_id = $drugstore->id ?? null;
 
-        // Get total medicines count
-        $totalMedicines = Medicine::where('store_id', $store_id)->count();
+public function index()
+{
+    DB::statement('SET SESSION query_cache_type = OFF');
 
-        // Get low stock medicines (less than 20 units)
-        $lowStockMedicines = Medicine::where('store_id', $store_id)
-            ->where('quantity', '<', 20)
-            ->orderBy('quantity', 'asc')
-            ->take(5)
-            ->get();
+    // Figure out the current store id for this logged-in drugstore user
+    $drugstore = Drugstore::where('user_id', Auth::id())->first();
+    $storeId   = $drugstore?->id; // <-- this must not be null
 
-        $lowStockCount = Medicine::where('store_id', $store_id)
-            ->where('quantity', '<', 20)
-            ->count();
-
-        // Get medicines expiring in 30 days
-        $expiringMedicines = Medicine::where('store_id', $store_id)
-            ->whereDate('expiration_date', '<=', now()->addDays(30))
-            ->whereDate('expiration_date', '>', now())
-            ->orderBy('expiration_date', 'asc')
-            ->take(5)
-            ->get();
-
-        $expiringCount = $expiringMedicines->count();
-
-        \Log::info('Dashboard Expiring Medicines:', [
-            'store_id' => $store_id,
-            'medicines' => $expiringMedicines->toArray(),
-            'count' => $expiringCount,
-            'query' => Medicine::where('store_id', $store_id)
-                ->whereDate('expiration_date', '<=', now()->addDays(30))
-                ->whereDate('expiration_date', '>', now())
-                ->toSql()
-        ]);
-
-        \Log::info('Expiring Count:', [
-            'store_id' => $store_id,
-            'count' => $expiringCount
-        ]);
-
-        // Get pending orders count
-        $pendingOrders = \App\Models\Order::where('store_id', $store_id)
-            ->where('status', 'pending')
-            ->count();
-
-        // Get all pending orders with pagination
-        $recentOrders = \App\Models\Order::query()
-            ->with(['customer.user', 'items.medicine'])
-            ->where('store_id', $store_id)
-            ->where('status', 'pending')
-            ->orderBy('created_at', 'desc')
-            ->paginate(5);
-            
-        \Log::info('Pending Orders Count:', [
-            'count' => $pendingOrders,
-            'store_id' => $store_id
-        ]);
-
-        // Get total sales (sum of all completed and approved orders)
-        $todayRevenue = \App\Models\Order::where('store_id', $store_id)
-            ->whereIn('status', ['completed', 'approved'])
-            ->sum('total_amount');
-            
-        \Log::info('Total Sales Calculation:', [
-            'store_id' => $store_id,
-            'total_amount' => $todayRevenue,
-            'query' => \App\Models\Order::where('store_id', $store_id)
-                ->whereIn('status', ['completed', 'approved'])
-                ->toSql()
-        ]);
-
-        // Get sales data for the chart (last 7 days)
-        try {
-            $salesData = \App\Models\Order::where('store_id', $store_id)
-                ->whereIn('status', ['completed', 'approved'])
-                ->whereBetween('created_at', [now()->subDays(6)->startOfDay(), now()->endOfDay()])
-                ->selectRaw('DATE(created_at) as date, SUM(total_amount) as total')
-                ->groupBy('date')
-                ->orderBy('date')
-                ->get();
-
-            \Log::info('Sales data query result:', [
-                'store_id' => $store_id,
-                'count' => $salesData->count(),
-                'data' => $salesData->toArray()
-            ]);
-        } catch (\Exception $e) {
-            \Log::error('Error fetching sales data: ' . $e->getMessage());
-            $salesData = collect([]);
-        }
-
-        // For debugging
-        \Log::info('Final variables before view:', [
-            'expiringCount' => $expiringCount,
-            'expiringMedicines count' => $expiringMedicines->count(),
-            'detailedOrders count' => $detailedOrders->count()
-        ]);
-
-        // Make sure we have all the variables we need
-        \Log::info('Final variables before view:', [
-            'store_id' => $store_id,
-            'expiringCount' => $expiringCount,
-            'expiringMedicines count' => $expiringMedicines->count(),
-            'lowStockCount' => $lowStockCount,
-            'pendingOrders' => $pendingOrders
-        ]);
-
-        return view('drugstore.index', compact(
-            'totalMedicines',
-            'lowStockMedicines',
-            'lowStockCount',
-            'pendingOrders',
-            'todayRevenue',
-            'recentOrders',
-            'salesData',
-            'expiringMedicines',
-            'expiringCount'
-        ));
+    // If no drugstore row is linked to this user, you will never see data
+    // Fail early so it's obvious instead of rendering "empty"
+    if (!$storeId) {
+        // You can change this to a redirect with a flash message if you want
+        abort(403, 'No drugstore record linked to this account (users.id=' . Auth::id() . ').');
     }
+
+    // ---------- Existing dashboard data ----------
+    $totalMedicines    = Medicine::where('store_id', $storeId)->count();
+    $lowStockMedicines = Medicine::where('store_id', $storeId)
+                            ->where('quantity', '<', 20)
+                            ->orderBy('quantity', 'asc')
+                            ->take(5)->get();
+    $lowStockCount     = Medicine::where('store_id', $storeId)->where('quantity', '<', 20)->count();
+
+    $expiringMedicines = Medicine::where('store_id', $storeId)
+                            ->whereDate('expiration_date', '<=', now()->addDays(30))
+                            ->whereDate('expiration_date', '>',  now())
+                            ->orderBy('expiration_date', 'asc')
+                            ->take(5)->get();
+    $expiringCount     = $expiringMedicines->count();
+
+    $pendingOrders     = Order::where('store_id', $storeId)->where('status', 'pending')->count();
+
+    $recentOrders      = Order::with(['customer.user', 'items.medicine'])
+                            ->where('store_id', $storeId)
+                            ->where('status', 'pending')
+                            ->orderBy('created_at', 'desc')
+                            ->paginate(5);
+
+    try {
+        $todayRevenue = Order::where('store_id', $storeId)
+                         ->whereIn('status', ['completed', 'approved'])
+                         ->sum('total_amount');
+
+        $salesData = Order::where('store_id', $storeId)
+                    ->whereIn('status', ['completed', 'approved'])
+                    ->whereBetween('created_at', [now()->subDays(6)->startOfDay(), now()->endOfDay()])
+                    ->selectRaw('DATE(created_at) as date, SUM(total_amount) as total')
+                    ->groupBy('date')->orderBy('date')->get();
+    } catch (\Throwable $e) {
+        Log::error('Sales data error: '.$e->getMessage());
+        $todayRevenue = 0;
+        $salesData    = collect([]);
+    }
+// --- Figure out which drugstore is active ---
+$userId = Auth::id();
+$drugstore = null;
+
+// Try Laravel Auth first
+if ($userId) {
+    $drugstore = Drugstore::where('user_id', $userId)->first();
+}
+
+// Fallback to session (for custom login systems)
+if (!$drugstore && session()->has('drugstore_id')) {
+    $drugstore = Drugstore::find(session('drugstore_id'));
+}
+
+if (!$drugstore) {
+    // No match at all — show a friendly message instead of aborting
+    return view('drugstore.index', [
+        'recentPrescriptions' => collect(),
+        'debugInfo' => ['storeId' => null, 'prescTotal' => 0, 'pageCount' => 0],
+        'totalMedicines' => 0,
+        'lowStockMedicines' => collect(),
+        'lowStockCount' => 0,
+        'pendingOrders' => 0,
+        'todayRevenue' => 0,
+        'recentOrders' => collect(),
+        'salesData' => collect(),
+        'expiringMedicines' => collect(),
+        'expiringCount' => 0,
+    ]);
+}
+
+// --- Fetch prescriptions linked to that drugstore ---
+$recentPrescriptions = PrescriptionSubmission::where('drugstore_id', $drugstore->id)
+    ->with(['customer.user', 'drugstore'])
+    ->latest()
+    ->paginate(5);
+
+// Debug info for blade
+$debugInfo = [
+    'storeId'    => $drugstore->id,
+    'prescTotal' => $recentPrescriptions->total(),
+    'pageCount'  => $recentPrescriptions->count(),
+];
+
+}
+
     public function createMedicine()
     {
         $drugstore = \App\Models\Drugstore::where('user_id', Auth::id())->first();

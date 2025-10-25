@@ -168,375 +168,468 @@
             <!-- page title area end -->
             <div class="main-content-inner">
                 <!-- sales report area start -->
-                                <style>
-                    .dashboard-card {
-                        border: none;
-                        border-radius: 15px;
-                        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-                        height: 100%;
-                        transition: all 0.3s ease;
-                    }
+                <!-- Enhanced Status Badge Styles -->
+<style>
+    .dashboard-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        height: 100%;
+        transition: all 0.3s ease;
+    }
 
-                    .dashboard-card:hover {
-                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-                    }
+    .dashboard-card:hover {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
 
-                    .card-header-title {
-                        font-size: 1.25rem;
-                        font-weight: 600;
-                        color: #333;
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                        margin: 0;
-                    }
+    .card-header-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+    }
 
-                    .item-card {
-                        background: #f8f9fa;
-                        border: 1px solid rgba(0, 0, 0, 0.05);
-                        border-radius: 12px;
-                        padding: 1rem;
-                        margin-bottom: 1rem;
-                        transition: all 0.3s ease;
-                    }
+    .item-card {
+        background: #f8f9fa;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
 
-                    .item-card:hover {
-                        background: white;
-                        transform: translateY(-2px);
-                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-                    }
+    .item-card:hover {
+        background: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
 
-                    .item-icon {
-                        width: 45px;
-                        height: 45px;
-                        background: rgba(33, 150, 243, 0.1);
-                        border-radius: 10px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
+    .item-icon {
+        width: 45px;
+        height: 45px;
+        background: rgba(33, 150, 243, 0.1);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-                    .badge-modern {
-                        background: linear-gradient(45deg, #2196F3, #1976D2);
-                        border-radius: 20px;
-                        padding: 0.5rem 1rem;
-                        color: white;
-                        font-weight: 500;
-                        font-size: 0.875rem;
-                    }
+    .badge-modern {
+        background: linear-gradient(45deg, #2196F3, #1976D2);
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        color: white;
+        font-weight: 500;
+        font-size: 0.875rem;
+    }
 
-                    .empty-state {
-                        text-align: center;
-                        padding: 3rem 2rem;
-                        background: #f8f9fa;
-                        border-radius: 15px;
-                    }
+    .empty-state {
+        text-align: center;
+        padding: 3rem 2rem;
+        background: #f8f9fa;
+        border-radius: 15px;
+    }
 
-                    .empty-state-icon {
-                        width: 80px;
-                        height: 80px;
-                        background: rgba(33, 150, 243, 0.1);
-                        border-radius: 50%;
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin-bottom: 1.5rem;
-                    }
-                </style>
+    .empty-state-icon {
+        width: 80px;
+        height: 80px;
+        background: rgba(33, 150, 243, 0.1);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
 
-                <div class="customer-dashboard-area mt-5 mb-5">
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="card dashboard-card">
-                                <div class="card-body p-4">
-                                    <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <h4 class="card-header-title">
-                                            <i class="fas fa-file-medical text-primary"></i>
-                                            My Prescriptions
-                                        </h4>
+    /* Enhanced Status Badge Styles */
+    .status-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .status-badge:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .status-pending {
+        background: linear-gradient(135deg, #FFA726, #FB8C00);
+        color: white;
+        border-color: #FFA726;
+    }
+
+    .status-approved {
+        background: linear-gradient(135deg, #66BB6A, #4CAF50);
+        color: white;
+        border-color: #66BB6A;
+    }
+
+    .status-rejected {
+        background: linear-gradient(135deg, #EF5350, #E53935);
+        color: white;
+        border-color: #EF5350;
+    }
+
+    .status-reviewed {
+        background: linear-gradient(135deg, #29B6F6, #0288D1);
+        color: white;
+        border-color: #29B6F6;
+    }
+
+    .status-badge i {
+        font-size: 0.7rem;
+    }
+
+    /* Status with icons */
+    .status-badge.pending::before {
+        content: "⏳";
+        margin-right: 4px;
+    }
+
+    .status-badge.approved::before {
+        content: "✅";
+        margin-right: 4px;
+    }
+
+    .status-badge.rejected::before {
+        content: "❌";
+        margin-right: 4px;
+    }
+
+    .status-badge.reviewed::before {
+        content: "👁️";
+        margin-right: 4px;
+    }
+</style>
+
+<div class="customer-dashboard-area mt-5 mb-5">
+    <div class="row g-4">
+        <!-- Submitted Prescriptions Section -->
+        <div class="col-md-6">
+            <div class="card dashboard-card h-100">
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="card-header-title">
+                            <i class="fas fa-file-upload text-success"></i>
+                            Submitted Prescriptions
+                        </h4>
+                    </div>
+
+                    {{-- Scrollable list area --}}
+                    <div style="max-height: 420px; overflow-y: auto;">
+                        @php
+                            $submittedPrescriptions = \App\Models\PrescriptionSubmission::with('drugstore')
+                                ->where('customer_id', auth()->user()->customer->id)
+                                ->latest()
+                                ->take(5)
+                                ->get();
+                        @endphp
+
+                        @forelse($submittedPrescriptions as $submission)
+                            <div class="item-card mb-3 border rounded p-3 bg-white shadow-sm">
+                                <div class="d-flex gap-3">
+                                    <div class="item-icon flex-shrink-0">
+                                        <i class="fas fa-file-medical text-primary fa-lg"></i>
                                     </div>
-
-                                    @php
-                                        $prescriptions = auth()->user()->customer->prescriptions()->latest()->take(3)->get();
-                                    @endphp
-
-                                    @forelse($prescriptions as $prescription)
-                                        <div class="item-card">
-                                            <div class="d-flex gap-3">
-                                                <div class="item-icon">
-                                                    <i class="fas fa-file-medical text-primary"></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                                        <div>
-                                                            <h6 class="mb-1 fw-bold">Prescription #{{ $prescription->id }}</h6>
-                                                            <p class="text-muted small mb-2">
-                                                                {{ $prescription->created_at->format('M d, Y h:i A') }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <p class="mb-0 text-muted">{{ Str::limit($prescription->notes, 100) }}</p>
-                                                </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-start mb-1">
+                                            <div>
+                                                <h6 class="mb-0 fw-bold">Submission #{{ $submission->id }}</h6>
+                                                <small class="text-muted">Sent to:
+                                                    <strong>{{ $submission->drugstore->storename ?? 'Unknown' }}</strong>
+                                                </small>
                                             </div>
-                                        </div>
-                                    @empty
-                                        <div class="empty-state">
-                                            <div class="empty-state-icon">
-                                                <i class="fas fa-file-medical text-primary fa-2x"></i>
-                                            </div>
-                                            <h5 class="fw-bold mb-2">No Prescriptions Yet</h5>
-                                            <p class="text-muted mb-0">Click the button above to add your first prescription</p>
-                                        </div>
-                                    @endforelse
-
-                                
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card dashboard-card">
-                                <div class="card-body p-4">
-                                    <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <h4 class="card-header-title">
-                                            <i class="fas fa-shopping-cart text-primary"></i>
-                                            Shopping Cart
-                                        </h4>
-                                        @if(!empty($cartItems) && count($cartItems) > 0)
-                                            <span class="badge-modern">
-                                                {{ count($cartItems) }} items
+                                            <span class="status-badge 
+                                                @if($submission->status == 'approved') status-approved approved
+                                                @elseif($submission->status == 'rejected') status-rejected rejected
+                                                @elseif($submission->status == 'reviewed') status-reviewed reviewed
+                                                @else status-pending pending @endif">
+                                                {{ ucfirst($submission->status) }}
                                             </span>
-                                        @endif
-                                    </div>
-                                    
-                                                                        <div class="active-orders">
-                                        @if(empty($cartItems) || count($cartItems) === 0)
-                                            <div class="empty-state">
-                                                <div class="empty-state-icon">
-                                                    <i class="fas fa-shopping-cart text-primary fa-2x"></i>
-                                                </div>
-                                                <h5 class="fw-bold mb-2">Your Cart is Empty</h5>
-                                                <p class="text-muted mb-4">Looks like you haven't added any medicines to your cart yet.</p>
-                                                <a href="#available-drugstores" class="btn btn-primary rounded-pill px-4">
-                                                    <i class="fas fa-pills me-2"></i>Browse Medicines
-                                                </a>
-                                            </div>
-                                        @else
-                                            <div class="cart-items">
-                                                @php $totalAmount = 0; @endphp
-                                                @foreach($cartItems as $item)
-                                                    @php 
-                                                        $itemTotal = $item['medicine']->medicine_price * $item['quantity'];
-                                                        $totalAmount += $itemTotal;
-                                                    @endphp
-                                                    <div class="cart-item mb-3 p-3 border rounded-3 bg-light">
-                                                        <div class="row align-items-center">
-                                                            <!-- Medicine Info -->
-                                                            <div class="col-md-6">
-                                                                <div class="d-flex align-items-center">
-                                                                    @if($item['medicine']->medicine_img)
-                                                                        <img src="{{ asset('storage/' . $item['medicine']->medicine_img) }}"
-                                                                             alt="{{ $item['medicine']->medicine_name }}"
-                                                                             class="rounded-3 me-3"
-                                                                             style="width: 60px; height: 60px; object-fit: cover;">
-                                                                    @else
-                                                                        <img src="{{ asset('admin/assets/images/icon/medicine.png') }}"
-                                                                             alt="No Image"
-                                                                             class="rounded-3 me-3"
-                                                                             style="width: 60px; height: 60px; object-fit: cover; opacity: 0.6;">
-                                                                    @endif
-                                                                    <div>
-                                                                        <h6 class="mb-1">{{ $item['medicine']->medicine_name }}</h6>
-                                                                        <p class="text-muted mb-0">{{ $item['medicine']->generic_name }}</p>
-                                                                        <small class="text-primary">{{ $item['store']->storename }}</small>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <!-- Price -->
-                                                            <div class="col-md-2">
-                                                                <div class="text-md-center">
-                                                                    <p class="mb-0 text-muted small">Price</p>
-                                                                    <p class="mb-0 fw-medium">₱{{ number_format($item['medicine']->medicine_price, 2) }}</p>
-                                    </div>
-                                    </div>
-                                                            
-                                                            <!-- Quantity -->
-                                                            <div class="col-md-2">
-                                                                <div class="text-md-center">
-                                                                    <p class="mb-2 text-muted small">Quantity</p>
-                                                                    <form method="POST" action="{{ route('cart.update') }}" class="d-inline">
-                                                                        @csrf
-                                                                        <input type="hidden" name="medicine_id" value="{{ $item['medicine']->id }}">
-                                                                        <div class="input-group input-group-sm" style="width: 100px;">
-                                                                            <button type="submit" name="quantity" value="{{ max(1, $item['quantity'] - 1) }}" 
-                                                                                    class="btn btn-outline-primary btn-sm">-</button>
-                                                                            <input type="text" 
-                                                                                   class="form-control form-control-sm text-center border-primary" 
-                                                                                   value="{{ $item['quantity'] }}" 
-                                                                                   readonly>
-                                                                            <button type="submit" name="quantity" value="{{ $item['quantity'] + 1 }}" 
-                                                                                    class="btn btn-outline-primary btn-sm"
-                                                                                    {{ $item['quantity'] >= $item['medicine']->quantity ? 'disabled' : '' }}>+</button>
-                                </div>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <!-- Total & Actions -->
-                                                            <div class="col-md-2">
-                                                                <div class="text-md-end">
-                                                                    <p class="mb-2 text-muted small">Total</p>
-                                                                    <p class="mb-0 fw-bold">₱{{ number_format($itemTotal, 2) }}</p>
-                                                                    <form method="POST" action="{{ route('cart.remove') }}" class="d-inline mt-2">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <input type="hidden" name="medicine_id" value="{{ $item['medicine']->id }}">
-                                                                        <button type="submit" class="btn btn-sm btn-link text-danger p-0" 
-                                                                                onclick="return confirm('Remove this item from cart?')">
-                                                                            <i class="fa fa-trash-alt"></i> Remove
-                                                                        </button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
+                                        </div>
+                                        <small class="text-muted d-block mb-1">
+                                            {{ $submission->created_at->format('M d, Y h:i A') }}
+                                        </small>
 
-                                                @if(count($cartItems) > 0)
-                                                    <!-- Cart Summary -->
-                                                    <div class="d-flex justify-content-end align-items-center mt-4">
-                                                        <div class="me-4">
-                                                            <span class="text-muted me-2">Total:</span>
-                                                            <span class="fw-bold text-primary fs-5">₱{{ number_format($totalAmount, 2) }}</span>
-                                                        </div>
-                                                        <button class="btn btn-primary" data-toggle="modal" data-target="#checkoutModal">
-                                                            <i class="fa fa-shopping-cart me-2"></i>Checkout
-                                                        </button>
-                                                    </div>
-                                                @endif
-                                                    
-                                                    <!-- Checkout Modal -->
-                                                    <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-lg" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="order-summary">
-                                                                        <div class="alert alert-info mb-4">
-                                                                            <i class="fa fa-info-circle me-2"></i>
-                                                                            This is a reservation for over-the-counter pickup. Please select your preferred pickup date and proceed to the pharmacy to complete your purchase.
-                                                                        </div>
-                                                                        
-                                                                        <!-- Pickup Date Selection -->
-                                                                        <div class="mb-4">
-                                                                            <h5 class="mb-3">Select Pickup Date</h5>
-                                                                            <div class="form-group">
-                                                                                <select class="form-select" id="pickupDate" required>
-                                                                                    <option value="">Choose pickup date...</option>
-                                                                                    <option value="today">Today (Before closing time)</option>
-                                                                                    <option value="tomorrow">Tomorrow</option>
-                                                                                </select>
-                                                                                <div class="form-text text-danger">
-                                                                                    * Reservation will be automatically voided if not picked up by the end of the selected day
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-bordered">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Item</th>
-                                                                                        <th>Quantity</th>
-                                                                                        <th class="text-end">Price</th>
-                                                                                        <th class="text-end">Total</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    @foreach($cartItems as $item)
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <div class="d-flex align-items-center">
-                                                                                                    <div class="me-2">
-                                                                                                        @if($item['medicine']->medicine_img)
-                                                                                                            <img src="{{ asset('storage/' . $item['medicine']->medicine_img) }}"
-                                                                                                                 alt="{{ $item['medicine']->medicine_name }}"
-                                                                                                                 class="rounded"
-                                                                                                                 style="width: 40px; height: 40px; object-fit: cover;">
-                                                                                                        @else
-                                                                                                            <img src="{{ asset('admin/assets/images/icon/medicine.png') }}"
-                                                                                                                 alt="No Image"
-                                                                                                                 class="rounded"
-                                                                                                                 style="width: 40px; height: 40px; object-fit: cover; opacity: 0.6;">
-                                                                                                        @endif
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <div class="fw-bold">{{ $item['medicine']->medicine_name }}</div>
-                                                                                                        <small class="text-muted">{{ $item['store']->storename }}</small>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </td>
-                                                                                            <td>{{ $item['quantity'] }}</td>
-                                                                                            <td class="text-end">₱{{ number_format($item['medicine']->medicine_price, 2) }}</td>
-                                                                                            <td class="text-end">₱{{ number_format($item['medicine']->medicine_price * $item['quantity'], 2) }}</td>
-                                                                                        </tr>
-                                                                                    @endforeach
-                                                                                    <tr>
-                                                                                        <td colspan="3" class="text-end fw-bold">Total Amount:</td>
-                                                                                        <td class="text-end fw-bold">₱{{ number_format($totalAmount, 2) }}</td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                                                                                        <button type="button" class="btn btn-primary" id="placeOrderBtn">
-                                                        <i class="fa fa-check me-2"></i>Place Order
-                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Order Confirmation Modal -->
-                                                    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header bg-success text-white">
-                                                                    <h5 class="modal-title" id="confirmationModalLabel">
-                                                                        <i class="fa fa-check-circle me-2"></i>
-                                                                        Orders Reserved Successfully
-                                                                    </h5>
-                                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body p-4" id="confirmationModalBody">
-                                                                    <!-- Content will be dynamically inserted here -->
-                                                                </div>
-                                                                <div class="modal-footer justify-content-center">
-                                                                    <button type="button" class="btn btn-primary" onclick="window.location.reload()">
-                                                                        <i class="fa fa-check me-2"></i>Done
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        @if($submission->description)
+                                            <p class="mb-2 text-muted small">
+                                                <strong>Note:</strong> {{ $submission->description }}
+                                            </p>
                                         @endif
+
+                                        <a href="{{ asset('storage/'.$submission->file_path) }}" target="_blank" class="text-primary small">
+                                            <i class="fas fa-paperclip"></i> View File
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @empty
+                            <div class="empty-state text-center py-4">
+                                <i class="fas fa-inbox fa-2x text-secondary mb-2"></i>
+                                <p class="text-muted mb-0">No submitted prescriptions yet.</p>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Shopping Cart Section -->
+        <div class="col-md-6">
+            <div class="card dashboard-card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="card-header-title">
+                            <i class="fas fa-shopping-cart text-primary"></i>
+                            Shopping Cart
+                        </h4>
+                        @if(!empty($cartItems) && count($cartItems) > 0)
+                            <span class="badge-modern">
+                                {{ count($cartItems) }} items
+                            </span>
+                        @endif
+                    </div>
+                    
+                    <div class="active-orders">
+                        @if(empty($cartItems) || count($cartItems) === 0)
+                            <div class="empty-state">
+                                <div class="empty-state-icon">
+                                    <i class="fas fa-shopping-cart text-primary fa-2x"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">Your Cart is Empty</h5>
+                                <p class="text-muted mb-4">Looks like you haven't added any medicines to your cart yet.</p>
+                                <a href="#available-drugstores" class="btn btn-primary rounded-pill px-4">
+                                    <i class="fas fa-pills me-2"></i>Browse Medicines
+                                </a>
+                            </div>
+                        @else
+                            <div class="cart-items">
+                                @php $totalAmount = 0; @endphp
+                                @foreach($cartItems as $item)
+                                    @php 
+                                        $itemTotal = $item['medicine']->medicine_price * $item['quantity'];
+                                        $totalAmount += $itemTotal;
+                                    @endphp
+                                    <div class="cart-item mb-3 p-3 border rounded-3 bg-light">
+                                        <div class="row align-items-center">
+                                            <!-- Medicine Info -->
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center">
+                                                    @if($item['medicine']->medicine_img)
+                                                        <img src="{{ asset('storage/' . $item['medicine']->medicine_img) }}"
+                                                             alt="{{ $item['medicine']->medicine_name }}"
+                                                             class="rounded-3 me-3"
+                                                             style="width: 60px; height: 60px; object-fit: cover;">
+                                                    @else
+                                                        <img src="{{ asset('admin/assets/images/icon/medicine.png') }}"
+                                                             alt="No Image"
+                                                             class="rounded-3 me-3"
+                                                             style="width: 60px; height: 60px; object-fit: cover; opacity: 0.6;">
+                                                    @endif
+                                                    <div>
+                                                        <h6 class="mb-1">{{ $item['medicine']->medicine_name }}</h6>
+                                                        <p class="text-muted mb-0">{{ $item['medicine']->generic_name }}</p>
+                                                        <small class="text-primary">{{ $item['store']->storename }}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Price -->
+                                            <div class="col-md-2">
+                                                <div class="text-md-center">
+                                                    <p class="mb-0 text-muted small">Price</p>
+                                                    <p class="mb-0 fw-medium">₱{{ number_format($item['medicine']->medicine_price, 2) }}</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Quantity -->
+                                            <div class="col-md-2">
+                                                <div class="text-md-center">
+                                                    <p class="mb-2 text-muted small">Quantity</p>
+                                                    <form method="POST" action="{{ route('cart.update') }}" class="d-inline">
+                                                        @csrf
+                                                        <input type="hidden" name="medicine_id" value="{{ $item['medicine']->id }}">
+                                                        <div class="input-group input-group-sm" style="width: 100px;">
+                                                            <button type="submit" name="quantity" value="{{ max(1, $item['quantity'] - 1) }}" 
+                                                                    class="btn btn-outline-primary btn-sm">-</button>
+                                                            <input type="text" 
+                                                                   class="form-control form-control-sm text-center border-primary" 
+                                                                   value="{{ $item['quantity'] }}" 
+                                                                   readonly>
+                                                            <button type="submit" name="quantity" value="{{ $item['quantity'] + 1 }}" 
+                                                                    class="btn btn-outline-primary btn-sm"
+                                                                    {{ $item['quantity'] >= $item['medicine']->quantity ? 'disabled' : '' }}>+</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Total & Actions -->
+                                            <div class="col-md-2">
+                                                <div class="text-md-end">
+                                                    <p class="mb-2 text-muted small">Total</p>
+                                                    <p class="mb-0 fw-bold">₱{{ number_format($itemTotal, 2) }}</p>
+                                                    <form method="POST" action="{{ route('cart.remove') }}" class="d-inline mt-2">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" name="medicine_id" value="{{ $item['medicine']->id }}">
+                                                        <button type="submit" class="btn btn-sm btn-link text-danger p-0" 
+                                                                onclick="return confirm('Remove this item from cart?')">
+                                                            <i class="fa fa-trash-alt"></i> Remove
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                                @if(count($cartItems) > 0)
+                                    <!-- Cart Summary -->
+                                    <div class="d-flex justify-content-end align-items-center mt-4">
+                                        <div class="me-4">
+                                            <span class="text-muted me-2">Total:</span>
+                                            <span class="fw-bold text-primary fs-5">₱{{ number_format($totalAmount, 2) }}</span>
+                                        </div>
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#checkoutModal">
+                                            <i class="fa fa-shopping-cart me-2"></i>Checkout
+                                        </button>
+                                    </div>
+                                @endif
+                                    
+                                <!-- Checkout Modal -->
+                                <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="order-summary">
+                                                    <div class="alert alert-info mb-4">
+                                                        <i class="fa fa-info-circle me-2"></i>
+                                                        This is a reservation for over-the-counter pickup. Please select your preferred pickup date and proceed to the pharmacy to complete your purchase.
+                                                    </div>
+                                                    
+                                                    <!-- Pickup Date Selection -->
+                                                    <div class="mb-4">
+                                                        <h5 class="mb-3">Select Pickup Date</h5>
+                                                        <div class="form-group">
+                                                            <select class="form-select" id="pickupDate" required>
+                                                                <option value="">Choose pickup date...</option>
+                                                                <option value="today">Today (Before closing time)</option>
+                                                                <option value="tomorrow">Tomorrow</option>
+                                                            </select>
+                                                            <div class="form-text text-danger">
+                                                                * Reservation will be automatically voided if not picked up by the end of the selected day
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Item</th>
+                                                                    <th>Quantity</th>
+                                                                    <th class="text-end">Price</th>
+                                                                    <th class="text-end">Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach($cartItems as $item)
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="me-2">
+                                                                                    @if($item['medicine']->medicine_img)
+                                                                                        <img src="{{ asset('storage/' . $item['medicine']->medicine_img) }}"
+                                                                                             alt="{{ $item['medicine']->medicine_name }}"
+                                                                                             class="rounded"
+                                                                                             style="width: 40px; height: 40px; object-fit: cover;">
+                                                                                    @else
+                                                                                        <img src="{{ asset('admin/assets/images/icon/medicine.png') }}"
+                                                                                             alt="No Image"
+                                                                                             class="rounded"
+                                                                                             style="width: 40px; height: 40px; object-fit: cover; opacity: 0.6;">
+                                                                                    @endif
+                                                                                </div>
+                                                                                <div>
+                                                                                    <div class="fw-bold">{{ $item['medicine']->medicine_name }}</div>
+                                                                                    <small class="text-muted">{{ $item['store']->storename }}</small>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>{{ $item['quantity'] }}</td>
+                                                                        <td class="text-end">₱{{ number_format($item['medicine']->medicine_price, 2) }}</td>
+                                                                        <td class="text-end">₱{{ number_format($item['medicine']->medicine_price * $item['quantity'], 2) }}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                                <tr>
+                                                                    <td colspan="3" class="text-end fw-bold">Total Amount:</td>
+                                                                    <td class="text-end fw-bold">₱{{ number_format($totalAmount, 2) }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-primary" id="placeOrderBtn">
+                                                    <i class="fa fa-check me-2"></i>Place Order
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Order Confirmation Modal -->
+                                <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-success text-white">
+                                                <h5 class="modal-title" id="confirmationModalLabel">
+                                                    <i class="fa fa-check-circle me-2"></i>
+                                                    Orders Reserved Successfully
+                                                </h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body p-4" id="confirmationModalBody">
+                                                <!-- Content will be dynamically inserted here -->
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <button type="button" class="btn btn-primary" onclick="window.location.reload()">
+                                                    <i class="fa fa-check me-2"></i>Done
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                 <!-- sales report area end -->
 
                 <!-- Order History Section -->
@@ -1215,168 +1308,549 @@
     </div>
     <!-- offset area end -->
 
-    <!-- Modern Prescription Modal Styles -->
-    <style>
-        .modern-modal .modal-content {
-            border: none;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
+<!-- Enhanced Modern Prescription Modal Styles -->
+<style>
+    /* Modern Modal Base Styles */
+    .modern-modal .modal-content {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+    }
 
-        .modern-modal .modal-header {
-            background: linear-gradient(45deg, #2196F3, #1976D2);
-            color: white;
-            border-radius: 20px 20px 0 0;
-            padding: 1.5rem;
-            border: none;
-        }
+    .modern-modal .modal-header {
+        background: linear-gradient(45deg, #2196F3, #1976D2);
+        color: white;
+        border-radius: 20px 20px 0 0;
+        padding: 1.5rem;
+        border: none;
+    }
 
-        .modern-modal .modal-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .modern-modal .modal-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-        .modern-modal .btn-close {
-            background-color: white;
-            opacity: 0.8;
-            transition: all 0.3s ease;
-        }
+    .modern-modal .btn-close {
+        background-color: white;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+    }
 
-        .modern-modal .btn-close:hover {
-            opacity: 1;
-            transform: rotate(90deg);
-        }
+    .modern-modal .btn-close:hover {
+        opacity: 1;
+        transform: rotate(90deg);
+    }
 
-        .modern-modal .modal-body {
-            padding: 2rem;
-        }
+    .modern-modal .modal-body {
+        padding: 2rem;
+    }
 
-        .modern-textarea {
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            padding: 1rem;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            resize: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-        }
+    /* Form Elements */
+    .modern-textarea {
+        border: 2px solid #e0e0e0;
+        border-radius: 15px;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        resize: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    }
 
-        .modern-textarea:focus {
-            border-color: #2196F3;
-            box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1);
-        }
+    .modern-textarea:focus {
+        border-color: #2196F3;
+        box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1);
+    }
 
-        .modern-label {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-        }
+    .modern-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.75rem;
+        font-size: 1.1rem;
+    }
 
-        .modern-helper {
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 0.75rem;
-            padding: 0.75rem;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #2196F3;
-        }
+    .modern-helper {
+        color: #666;
+        font-size: 0.9rem;
+        margin-top: 0.75rem;
+        padding: 0.75rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border-left: 4px solid #2196F3;
+    }
 
-        .modern-submit {
-            background: linear-gradient(45deg, #2196F3, #1976D2);
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 10px;
-            color: white;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+    /* Enhanced Submit Button */
+    .modern-submit-btn {
+        background: linear-gradient(45deg, #4CAF50, #45a049);
+        border: none;
+        padding: 0.85rem 2.5rem;
+        border-radius: 12px;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.25);
+        position: relative;
+        overflow: hidden;
+    }
 
-        .modern-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
-        }
+    .modern-submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(76, 175, 80, 0.35);
+    }
 
-        .modern-cancel {
-            background: #f8f9fa;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 10px;
-            color: #666;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
+    .modern-submit-btn:active {
+        transform: translateY(-1px);
+    }
 
-        .modern-cancel:hover {
-            background: #e9ecef;
-            transform: translateY(-2px);
-        }
-    </style>
+    .modern-submit-btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+    }
 
-    <!-- Add Prescription Modal -->
-    <div class="modal fade" id="addPrescriptionModal" tabindex="-1" aria-labelledby="addPrescriptionModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modern-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addPrescriptionModalLabel">
-                        <i class="fas fa-file-medical"></i>
-                        Add Prescription
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="prescriptionForm">
-                        <div class="mb-4">
-                            <label for="prescriptionDetails" class="modern-label">Prescription Details</label>
-                            <textarea class="form-control modern-textarea" id="prescriptionDetails" rows="5" 
-                                    placeholder="Enter your prescription details here..." required></textarea>
-                            <div class="modern-helper">
-                                <i class="fas fa-info-circle me-2"></i>
-                                Please enter your prescription details clearly and accurately.
-                                Include medicine names, dosage, and any specific instructions.
+    .modern-submit-btn:focus:not(:active)::after {
+        animation: ripple 1s ease-out;
+    }
+
+    @keyframes ripple {
+        0% {
+            transform: scale(0, 0);
+            opacity: 0.5;
+        }
+        100% {
+            transform: scale(20, 20);
+            opacity: 0;
+        }
+    }
+
+    .modern-cancel {
+        background: #f8f9fa;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 10px;
+        color: #666;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .modern-cancel:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+    }
+
+    /* Enhanced Submit Prescription Modal */
+    #submitPrescriptionModal .modal-content {
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        border: none;
+        overflow: hidden;
+    }
+
+    #submitPrescriptionModal .modal-header {
+        background: linear-gradient(45deg, #4CAF50, #45a049);
+        color: white;
+        border-radius: 20px 20px 0 0;
+        padding: 1.5rem;
+        border: none;
+    }
+
+    #submitPrescriptionModal .modal-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #submitPrescriptionModal .modal-body {
+        padding: 2rem;
+    }
+
+    /* Enhanced Form Controls */
+    .enhanced-form-control {
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 0.85rem 1rem;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .enhanced-form-control:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1);
+    }
+
+    .enhanced-form-label {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+    }
+
+    /* Enhanced Submit Button for Second Modal */
+    .enhanced-submit-btn {
+        background: linear-gradient(45deg, #2196F3, #1976D2);
+        border: none;
+        padding: 0.85rem 2.5rem;
+        border-radius: 12px;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 12px rgba(33, 150, 243, 0.25);
+    }
+
+    .enhanced-submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(33, 150, 243, 0.35);
+    }
+
+    /* File Upload Enhancement */
+    .file-upload-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .file-upload-wrapper input[type=file] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .file-upload-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0.85rem 1rem;
+        background: #f8f9fa;
+        border: 2px dashed #dee2e6;
+        border-radius: 12px;
+        color: #6c757d;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .file-upload-btn:hover {
+        background: #e9ecef;
+        border-color: #4CAF50;
+        color: #4CAF50;
+    }
+
+    .file-name {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    /* Enhanced Drugstore Selection - FIXED */
+    .drugstore-select-wrapper {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+
+    .drugstore-select-wrapper::before {
+        content: "🏥";
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 3;
+        font-size: 1.1rem;
+    }
+
+    .enhanced-drugstore-select {
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 0.85rem 1rem 0.85rem 3rem;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        background-color: white;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 16px;
+        width: 100%;
+    }
+
+    .enhanced-drugstore-select:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1);
+        outline: none;
+    }
+
+    /* Selected drugstore display - FIXED POSITIONING */
+    .selected-drugstore {
+        background: rgba(76, 175, 80, 0.08);
+        border: 1px solid rgba(76, 175, 80, 0.2);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-top: 1rem;
+        display: none;
+        transition: all 0.3s ease;
+    }
+
+    .selected-drugstore.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .selected-drugstore-title {
+        font-weight: 600;
+        color: #4CAF50;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+    }
+
+    .selected-drugstore-name {
+        font-weight: 600;
+        color: #333;
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .selected-drugstore-address {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    /* Ensure proper spacing in the modal */
+    .drugstore-section {
+        margin-bottom: 1.5rem;
+    }
+</style>
+
+<!-- Add Prescription Modal -->
+<div class="modal fade" id="addPrescriptionModal" tabindex="-1" aria-labelledby="addPrescriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modern-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPrescriptionModalLabel">
+                    <i class="fas fa-file-medical"></i>
+                    Add Prescription
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="prescriptionForm">
+                    <div class="mb-4">
+                        <label for="prescriptionDetails" class="modern-label">Prescription Details</label>
+                        <textarea class="form-control modern-textarea" id="prescriptionDetails" rows="5" 
+                                placeholder="Enter your prescription details here..." required></textarea>
+                        <div class="modern-helper">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Please enter your prescription details clearly and accurately.
+                            Include medicine names, dosage, and any specific instructions.
+                        </div>
+                    </div>
+                    <!-- AI Analysis Results -->
+                    <div id="aiAnalysisSection" class="mt-4 d-none">
+                        <div class="modern-label d-flex align-items-center gap-2 mb-3">
+                            <i class="fas fa-robot text-primary"></i>
+                            AI Analysis
+                        </div>
+                        <div class="modern-analysis-box p-4 rounded-3" style="background: rgba(33, 150, 243, 0.05); border: 1px solid rgba(33, 150, 243, 0.1);">
+                            <div id="aiAnalysisSpinner" class="text-center py-3">
+                                <div class="spinner-grow text-primary" style="width: 2rem; height: 2rem;" role="status">
+                                    <span class="visually-hidden">Analyzing...</span>
+                                </div>
+                                <div class="mt-3 text-primary fw-500">Analyzing your prescription...</div>
+                            </div>
+                            <div id="aiAnalysisResult" class="d-none">
+                                <!-- AI analysis will be inserted here -->
                             </div>
                         </div>
-                        <!-- AI Analysis Results -->
-                        <div id="aiAnalysisSection" class="mt-4 d-none">
-                            <div class="modern-label d-flex align-items-center gap-2 mb-3">
-                                <i class="fas fa-robot text-primary"></i>
-                                AI Analysis
-                            </div>
-                            <div class="modern-analysis-box p-4 rounded-3" style="background: rgba(33, 150, 243, 0.05); border: 1px solid rgba(33, 150, 243, 0.1);">
-                                <div id="aiAnalysisSpinner" class="text-center py-3">
-                                    <div class="spinner-grow text-primary" style="width: 2rem; height: 2rem;" role="status">
-                                        <span class="visually-hidden">Analyzing...</span>
-                                    </div>
-                                    <div class="mt-3 text-primary fw-500">Analyzing your prescription...</div>
-                                </div>
-                                <div id="aiAnalysisResult" class="d-none">
-                                    <!-- AI analysis will be inserted here -->
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer border-0 gap-2 p-4">
-                    <button type="button" class="modern-cancel" data-bs-dismiss="modal">
-                        <i class="fas fa-times me-2"></i>
-                        Cancel
-                    </button>
-                    <button type="button" class="modern-submit" onclick="submitPrescription()">
-                        <i class="fas fa-paper-plane me-2"></i>
-                        Submit Prescription
-                    </button>
-                </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0 gap-2 p-4">
+                <button type="button" class="modern-cancel" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>
+                    Cancel
+                </button>
+                <button class="modern-submit-btn" data-bs-toggle="modal" data-bs-target="#submitPrescriptionModal">
+                    <i class="fas fa-paper-plane me-1"></i>
+                    Submit Prescription
+                </button>
             </div>
         </div>
     </div>
+</div>
 
+<!-- Submit Prescription Modal -->
+<div class="modal fade" id="submitPrescriptionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Submit Prescription
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ route('prescription.submit') }}" enctype="multipart/form-data" id="submitPrescriptionForm">
+                    @csrf
+                    <input type="hidden" name="prescription_id" id="prescription_id" value="{{ $prescription->id ?? '' }}">
+
+                    <div class="mb-4">
+                        <label class="enhanced-form-label">Upload Prescription</label>
+                        <div class="file-upload-wrapper">
+                            <div class="file-upload-btn">
+                                <i class="fas fa-cloud-upload-alt me-2"></i>
+                                <span>Choose File</span>
+                            </div>
+                            <input type="file" class="form-control enhanced-form-control" name="file" required>
+                        </div>
+                        <div class="file-name" id="fileName">No file chosen</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="enhanced-form-label">Description / Message (Optional)</label>
+                        <textarea class="form-control enhanced-form-control" name="description" rows="3" placeholder="Enter any note for the pharmacist..."></textarea>
+                    </div>
+
+                    <!-- Drugstore Section - Fixed Layout -->
+                    <div class="drugstore-section">
+                        <label class="enhanced-form-label">Select Drugstore</label>
+                        <div class="drugstore-select-wrapper">
+        <select class="enhanced-drugstore-select" name="drugstore_id" required id="drugstoreSelect">
+            <option value="">Choose a drugstore...</option>
+            @foreach ($drugstores as $drugstore)
+                <option value="{{ $drugstore->id }}">
+                    {{ $drugstore->storename }} - {{ $drugstore->storeaddress }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+                        
+                        <!-- Selected Drugstore Display - Now properly positioned -->
+                        <!-- <div class="selected-drugstore" id="selectedDrugstore">
+                            <div class="selected-drugstore-title">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Selected Drugstore
+                            </div>
+                            <div class="selected-drugstore-name" id="selectedDrugstoreName"></div>
+                            <div class="selected-drugstore-address" id="selectedDrugstoreAddress"></div>
+                        </div> -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0 p-4">
+                <button type="button" class="modern-cancel" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i>
+                    Cancel
+                </button>
+                <button type="submit" form="submitPrescriptionForm" class="enhanced-submit-btn">
+                    <i class="fas fa-paper-plane me-1"></i>
+                    Send Prescription
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // File name display for file input
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.querySelector('input[name="file"]');
+        const fileNameDisplay = document.getElementById('fileName');
+        
+        if (fileInput && fileNameDisplay) {
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    fileNameDisplay.textContent = this.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = 'No file chosen';
+                }
+            });
+        }
+        
+        // Drugstore selection functionality - Fixed
+        const drugstoreSelect = document.getElementById('drugstoreSelect');
+        const selectedDrugstore = document.getElementById('selectedDrugstore');
+        const selectedDrugstoreName = document.getElementById('selectedDrugstoreName');
+        const selectedDrugstoreAddress = document.getElementById('selectedDrugstoreAddress');
+        
+        if (drugstoreSelect && selectedDrugstore) {
+            drugstoreSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                
+                if (selectedOption.value) {
+                    // Extract name and address from the option text
+                    const optionText = selectedOption.text;
+                    const separatorIndex = optionText.indexOf(' - ');
+                    
+                    let name, address;
+                    if (separatorIndex !== -1) {
+                        name = optionText.substring(0, separatorIndex);
+                        address = optionText.substring(separatorIndex + 3); // +3 to skip " - "
+                    } else {
+                        name = optionText;
+                        address = 'Address not available';
+                    }
+                    
+                    selectedDrugstoreName.textContent = name;
+                    selectedDrugstoreAddress.textContent = address;
+                    selectedDrugstore.classList.add('active');
+                } else {
+                    selectedDrugstore.classList.remove('active');
+                }
+            });
+            
+            // Trigger change event on page load if there's a selected value
+            if (drugstoreSelect.value) {
+                drugstoreSelect.dispatchEvent(new Event('change'));
+            }
+        }
+        
+        // Add ripple effect to modern submit button
+        const modernSubmitBtn = document.querySelector('.modern-submit-btn');
+        if (modernSubmitBtn) {
+            modernSubmitBtn.addEventListener('click', function(e) {
+                // The ripple effect is handled via CSS
+            });
+        }
+    });
+</script>
     <!-- jquery latest version -->
    @include('customer.script')
 
@@ -2375,6 +2849,31 @@
    <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUXAVO-jgzu0AwNfawYdtWep3cbHFoHZ0&callback=initMap">
    </script>
+
+
+   <script>
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const res = await fetch("{{ route('customer.notifications') }}");
+        const data = await res.json();
+
+        if (data.notifications && data.notifications.length > 0) {
+            data.notifications.forEach(n => {
+                const toast = document.createElement('div');
+                toast.className = 'fixed bottom-5 right-5 bg-green-600 text-white px-4 py-2 mb-2 rounded shadow-lg z-50';
+                toast.textContent = (n.status === 'approved')
+                    ? `✅ Your prescription #${n.id} was approved!`
+                    : `❌ Your prescription #${n.id} was rejected.`;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 5000);
+            });
+        }
+    } catch (e) {
+        console.error('Error fetching notifications', e);
+    }
+});
+</script>
+
 </body>
 
 </html>
